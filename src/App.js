@@ -70,7 +70,7 @@ const checkedTodosCount = todos.filter((t) => t.completed).length;
               />
               <span style={{ textDecoration: todo.checked ? 'line-through' : 'none' }}>{todo.text}</span>
               &nbsp;&nbsp;&nbsp;
-            
+             
               
 
               {/* Todo delete button */}
