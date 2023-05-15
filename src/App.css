@@ -1,7 +1,82 @@
-/* .App {
+h1{
   text-align: center;
+  color: rgb(0, 0, 0);
+  
+}
+.container{
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background: #FFE181;
+  text-align: center;
+  width: 50%;
+  height: 250px;
+  overflow: auto;
+  
+}
+.btnadd{
+  background-color: blue;
+  color: white;
+  font-size: 10px;
+  padding: 5px 20px;
+  border-radius: 5px;
+  margin: 5px 0px;
+  cursor: pointer;
 }
 
+.btnclr{
+  background-color: red;
+  color: white;
+  font-size: 10px;
+  padding: 5px 20px;
+  border-radius: 5px;
+  margin: 5px 0px;
+  cursor: pointer;
+}
+
+.btnshide{
+  background-color: black;
+  color: white;
+  font-size: 10px;
+  padding: 5px 20px;
+  border-radius: 5px;
+  margin: 5px 0px;
+  cursor: pointer;
+}
+.ex{
+  background: rgb(255, 0, 0);
+  cursor: pointer;
+  transition: all 150ms;
+  &:hover,
+  &:focus {
+    transform: rotateZ(90deg);
+    background: hsl(216, 100, 40);
+  }
+
+}
+body{
+  background-image: linear-gradient(25deg,#d64c7f,#ee4758 50%);}
+
+.headerr h1 {
+  text-align: center;
+      font-size:30px; font-weight:300; color:#222; letter-spacing:1px;
+      text-transform: uppercase;
+  
+      display: grid;
+      grid-template-columns: 1fr max-content 1fr;
+      grid-template-rows: 27px 0;
+      grid-gap: 20px;
+      align-items: center;
+  }
+ul{
+  align-items: center;
+  margin-bottom: 10px;
+}
+  
+/* 
 .App-logo {
   height: 40vmin;
   pointer-events: none;

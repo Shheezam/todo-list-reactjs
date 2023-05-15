@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import "./App.css";
+
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
@@ -27,39 +29,37 @@ const TodoList = () => {
     setShowCompleted(true);
   };
  
-const checkedTodosCount = todos.filter((t) => t.completed).length;
+const checkedTodosCount = todos.filter((t) => t.checked).length;
 
   return (
-    <div>
+    <div className='container'>
       <h1>Todo List</h1>
-    
-      <div>
+      <div className='buttons'>
         {/* Textbox */}
         <input type="text" value={newTodo} onChange={(e) => setNewTodo(e.target.value)} />
         &nbsp;&nbsp;&nbsp;
 
         {/* Add A Task */}
-        <button onClick={handleAddTodo}>Add Todo</button>
+        <button className='btnadd' onClick={handleAddTodo}>Add Todo</button>
         &nbsp;&nbsp;&nbsp;
         
         {/* Clear Checklist */}
-        <button onClick={() => {setTodos([]);}}>Clear Todos</button>
+        <button className='btnclr' onClick={() => {setTodos([]);}}>Clear Todos</button>
         &nbsp;&nbsp;&nbsp;
-        
-        {/* Show/Hide completed task*/}
-          {showCompleted ? (
-          <button onClick={btnShow}>Show</button>
-        ) : (
-          <button onClick={btnHide}>Hide</button>
-        )}
       </div>
         <p>Checked Todos Count: {checkedTodosCount}</p>
+          {/* Show/Hide completed task*/}
+          {showCompleted ? (
+          <button className='btnshide' onClick={btnShow}>Show tasks</button>
+        ) : (
+          <button className='btnshide' onClick={btnHide}>Hide tasks</button>
+        )}
       <div>
         {/* Todo Checklist */}
         <ul>
         {(showCompleted ? todos.filter((t) => t.checked !== true) : todos).map(
           (todo) => (
-            <li key={todo.id}>
+            <div key={todo.id}>
               <input
                 type="checkbox"
                 checked={todo.checked}
@@ -71,14 +71,14 @@ const checkedTodosCount = todos.filter((t) => t.completed).length;
               &nbsp;&nbsp;&nbsp;
 
               {/* Todo delete button */}
-              <button
+              <button className='ex'
                 onClick={() => {
                   setTodos((todos) => todos.filter((t) => t.id !== todo.id));
                 }}
               >
                 x
               </button>
-            </li>
+              </div>
           )
         )}
         </ul>
