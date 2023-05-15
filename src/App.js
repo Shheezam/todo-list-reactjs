@@ -18,7 +18,6 @@ const TodoList = () => {
       todos.map((t) => (t.id === id ? { ...t, checked } : t))
     );
   };  
-
  
   //Show or hide completed list Button 
   const btnShow = () => {
@@ -48,13 +47,13 @@ const checkedTodosCount = todos.filter((t) => t.completed).length;
         &nbsp;&nbsp;&nbsp;
         
         {/* Show/Hide completed task*/}
-        {showCompleted ? (
-        <button onClick={btnShow}>Show</button>
-      ) : (
-        <button onClick={btnHide}>Hide</button>
-      )}
+          {showCompleted ? (
+          <button onClick={btnShow}>Show</button>
+        ) : (
+          <button onClick={btnHide}>Hide</button>
+        )}
       </div>
-      <p>Checked Todos Count: {checkedTodosCount}</p>
+        <p>Checked Todos Count: {checkedTodosCount}</p>
       <div>
         {/* Todo Checklist */}
         <ul>
@@ -70,8 +69,6 @@ const checkedTodosCount = todos.filter((t) => t.completed).length;
               />
               <span style={{ textDecoration: todo.checked ? 'line-through' : 'none' }}>{todo.text}</span>
               &nbsp;&nbsp;&nbsp;
-             
-              
 
               {/* Todo delete button */}
               <button
@@ -84,7 +81,7 @@ const checkedTodosCount = todos.filter((t) => t.completed).length;
             </li>
           )
         )}
-      </ul>
+        </ul>
       </div>
       
     </div>
