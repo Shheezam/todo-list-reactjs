@@ -3,43 +3,37 @@ import React, { useState } from 'react';
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState('');
-  const [showCompleted, setShowCompleted] = useState(true);
+  const [showCompleted, setShowCompleted] = useState(false);
 
   // Add new todo button func
   const handleAddTodo = () => {
     if (!newTodo) return;
-    setTodos([...todos,{text: newTodo, completed: false}]);
+    setTodos([...todos,{id: new Date().getTime(), text: newTodo, checked: false}]);
     setNewTodo('');
   }
 
-   // /Delete button func
-   const handleDelete = (index) => {
-    const newTodos = [...todos];
-    newTodos.splice(index, 1);
-    setTodos(newTodos);
-  }
+  //Filter the list
+  const onCheckedChanged = (id, checked) => {
+    setTodos((todos) =>
+      todos.map((t) => (t.id === id ? { ...t, checked } : t))
+    );
+  };  
 
-  //toggle the checkbox opposite of its property or value func
-  const handleToggle = (index) => {
-    const newTodos = [...todos];
-    newTodos[index].completed = !newTodos[index].completed;
-    setTodos(newTodos);
-  }
  
   //Show or hide completed list Button 
-  const handleFilter = () => {
-    setShowCompleted(!showCompleted);
-  }
-
-  //filter and sort out the completed todo list func
-const filteredTodos = todos.sort((a, b) => a.completed - b.completed).filter(todo => showCompleted || !todo.completed);
-
+  const btnShow = () => {
+    setShowCompleted(false);
+  };
+  const btnHide = () => {
+    setShowCompleted(true);
+  };
+ 
 const checkedTodosCount = todos.filter((t) => t.completed).length;
 
   return (
     <div>
       <h1>Todo List</h1>
-
+    
       <div>
         {/* Textbox */}
         <input type="text" value={newTodo} onChange={(e) => setNewTodo(e.target.value)} />
@@ -54,28 +48,42 @@ const checkedTodosCount = todos.filter((t) => t.completed).length;
         &nbsp;&nbsp;&nbsp;
         
         {/* Show/Hide completed task*/}
-        <button onClick={handleFilter}>
-          {showCompleted ? 'Hide Completed Tasks' : 'Show Completed Tasks'}
-        </button>
+        {showCompleted ? (
+        <button onClick={btnShow}>Show</button>
+      ) : (
+        <button onClick={btnHide}>Hide</button>
+      )}
       </div>
       <p>Checked Todos Count: {checkedTodosCount}</p>
       <div>
         {/* Todo Checklist */}
-      <ul>
-        {filteredTodos.map((todo, i) => (
-          <div  key={i}>
-            <input 
-              type="checkbox"
-              checked={todo.completed}
-              onChange={() => handleToggle(i)}
-            />
-            <span style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>{todo.text}</span>
-            &nbsp;&nbsp;&nbsp;
+        <ul>
+        {(showCompleted ? todos.filter((t) => t.checked !== true) : todos).map(
+          (todo) => (
+            <li key={todo.id}>
+              <input
+                type="checkbox"
+                checked={todo.checked}
+                onChange={(e) => {
+                  onCheckedChanged(todo.id, !todo.checked);
+                }}
+              />
+              <span style={{ textDecoration: todo.checked ? 'line-through' : 'none' }}>{todo.text}</span>
+              &nbsp;&nbsp;&nbsp;
+            
+              
 
-            {/* Delete button */}
-            <button onClick={() => handleDelete(i)}>X</button>
-          </div>
-        ))}
+              {/* Todo delete button */}
+              <button
+                onClick={() => {
+                  setTodos((todos) => todos.filter((t) => t.id !== todo.id));
+                }}
+              >
+                x
+              </button>
+            </li>
+          )
+        )}
       </ul>
       </div>
       
