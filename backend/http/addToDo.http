@@ -1,30 +1,29 @@
-###GET /todos
+###GET /todos -should fetch all objects in the todos collectio
 GET http://localhost:8081/todos
 Content-Type: application/json
 
-###GET /todos/:id
-GET http://localhost:8081/todos/3
+###GET /todos/:id -gets a specific object in the todos collection
+GET http://localhost:8081/todos/1
 Content-Type: application/json
 
-###POST /todos - { "task": "Make a wish" }
+###POST /todos -adds a new object in the todos collection
 POST http://localhost:8081/todos
 Content-Type: application/json
 
 {
-  "id": 123, 
-  "task": "Make a wish",
+  "task": "Added new task", 
   "checked": false
 }
 
-###PATCH /todos/:id - { "checked": true }
-PATCH http://localhost:8081/todos/3
+###PATCH /todos/:id -updates an existing object in the todos collection
+PATCH http://localhost:8081/todos/1
 Content-Type: application/json
 
 {
  "checked": true
 }
 
-###PATCH /todos/:id - { "checked": "" }
+###PATCH /todos/:id -update check
 PATCH http://localhost:8081/todos/1
 Content-Type: application/json
 
@@ -32,7 +31,11 @@ Content-Type: application/json
  "checked": ""
 }
 
-###DELETE /todos/:id
-DELETE  http://localhost:8081/todos/1684262310210
+###DELETE /todos/:id delete an object in the todos collection
+DELETE  http://localhost:8081/todos/1
+Content-Type: application/json
+
+###DELETE /todos
+DELETE  http://localhost:8081/todos
 Content-Type: application/json
 
