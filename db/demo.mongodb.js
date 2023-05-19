@@ -1,3 +1,27 @@
+//TODO
+use ('todo_db')
+db.todos.insertOne({
+  _id: 1,
+  title: 'Hello Wolrd',
+  checked : true
+
+})
+
+use('todo_db')
+db.todos.findOne({
+  _id : 1
+})
+
+use('todo_db')
+db.todos.updateOne({
+  _id: 1
+},{
+  $set:{
+    title: 'Hello Again',
+    checked: false
+  }
+})
+
 
 use('sample_mflix')
 db.movies.findOne({

@@ -11,7 +11,8 @@ POST http://localhost:8081/todos
 Content-Type: application/json
 
 {
-  "task": "Added new task", 
+  "_id" : 1,
+  "task": "Hello World", 
   "checked": false
 }
 

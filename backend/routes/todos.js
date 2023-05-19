@@ -5,16 +5,11 @@ import { ObjectId } from 'mongodb';
 
 const router = express.Router();
 const TodoSchema = z.object({
+    _id: z.number(),
     task: z.string(),
     checked: z.boolean(),
 })
 
-let todos = [
-    {id:1, task: 'Clean My Workspace', checked:false},
-    {id:2, task: 'Play With My Cat', checked:false},
-    {id:3, task: 'Call My Girlfriend', checked:false},
-
-];
 
   
 //GET /todos - should fetch all objects in the todos collectio
@@ -26,9 +21,13 @@ router.get('/', async (req, res) => {
 
 //GET /todos/:id - gets a specific object in the todos collection
 router.get ('/:id', async (req, res) =>{
-    const todoId = req.params.id;
-    const foundIndex = await todoCollection.findOne(new ObjectId(todoId));
-
+    const todoId = parseInt (req.params.id);
+    console.log('req.params.id:', req.params.id);
+    console.log('todoId:', todoId);
+  
+    const foundIndex = await todoCollection.findOne({_id: todoId});
+    console.log('Found todo:', foundIndex);
+    
     if (foundIndex === null){
         res.status(404).send('Not Found')
     }else{
@@ -49,7 +48,7 @@ router.post("/", async (req, res) => {
     const result = await todoCollection.insertOne(parsedResult.data);
     const { insertedId } = result;
     const todoItem = await todoCollection.findOne({
-      _id: new ObjectId(insertedId),
+      _id: insertedId,
     });
     res.status(201).send(todoItem);
   
@@ -59,12 +58,13 @@ router.post("/", async (req, res) => {
 
 //PATCH /todos/:id - updates an existing object in the todos collection
 router.patch ('/:id', async (req,res) =>{
-    const todoId = req.params.id;
+    const todoId = parseInt (req.params.id);
     const { checked } = req.body;
     
-    if (!ObjectId.isValid(todoId)) return res.status(400).send("Invalid ID");
+    if (!ObjectId.isValid(todoId)) 
+    return res.status(400).send("Invalid ID");
     
-    const foundTodoItem = await todoCollection.findOne({ _id: new ObjectId(todoId)});
+    const foundTodoItem = await todoCollection.findOne({ _id: todoId});
   
     if (foundTodoItem == null) return res.status(404).send("Not Found");
     
@@ -72,25 +72,25 @@ router.patch ('/:id', async (req,res) =>{
      if (!parsedResult.success) return res.status(400).send(parsedResult.error);
 
     await todoCollection.updateOne(
-    { _id: new ObjectId(todoId) },
+    { _id: todoId },
     { $set: { checked } }
     );
-     const todoItem = await todoCollection.findOne({ _id: new ObjectId(todoId) });
+     const todoItem = await todoCollection.findOne({ _id: todoId });
     res.status(200).send(todoItem);
-});
+}); 
 
 //DELETE /todos/:id - delete an object in the todos collection
 router.delete("/:id", async (req, res) => {
-    const todoId = req.params.id;
+    const todoId = parseInt (req.params.id);
   
     if (!ObjectId.isValid(todoId)) return res.status(400).send("Invalid ID");
   
     const foundTodoItem = await todoCollection.findOne({
-      _id: new ObjectId(todoId),
+      _id: todoId,
     });
     if (foundTodoItem == null) return res.status(404).send("Not Found");
   
-    await todoCollection.deleteOne({ _id: new ObjectId(todoId) });
+    await todoCollection.deleteOne({ _id: todoId });
     res.status(204).send();
   });
 
